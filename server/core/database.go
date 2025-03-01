@@ -8,7 +8,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	"spaceweather/models"
+	"space-weather/models"
 )
 
 func InitDB() {

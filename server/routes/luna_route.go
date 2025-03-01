@@ -1,8 +1,9 @@
 package routes
 
 import (
+	"space-weather/handlers"
+
 	"github.com/go-chi/chi/v5"
-	"spaceweather/handlers"
 )
 
 func SetupLunaRouter(router *chi.Mux) {
