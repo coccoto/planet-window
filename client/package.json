@@ -1,12 +1,21 @@
 {
-  "name": "space-weather",
-  "version": "1.0.0",
-  "description": "",
-  "license": "ISC",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
+  "name": "example-basic",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start",
+    "version": "vinxi version"
+  },
+  "dependencies": {
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^0.15.0",
+    "@solidjs/start": "^1.1.0",
+    "solid-js": "^1.9.5",
+    "three": "^0.174.0",
+    "vinxi": "^0.5.3"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
