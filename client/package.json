@@ -17,5 +17,8 @@
   },
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "@types/three": "^0.174.0"
   }
 }
