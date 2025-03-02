@@ -2,6 +2,7 @@ import { createEffect, onCleanup } from "solid-js"
 import { Title } from "@solidjs/meta"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
+import { createMoonMesh, createStarsMesh } from "~/utils/threeCreatePlanet"
 
 export default function Home() {
     let mountRef = undefined as HTMLDivElement | undefined
@@ -15,7 +16,7 @@ export default function Home() {
 
         // カメラの設定
         const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000)
-        camera.position.set(0, 0, 50)
+        camera.position.set(50, 0, 0)
 
         // レンダラーの設定
         const renderer = new THREE.WebGLRenderer()
@@ -27,24 +28,22 @@ export default function Home() {
         controls.enableDamping = true
         controls.enableZoom = true
         controls.minDistance = 20
-        controls.maxDistance = 60
+        controls.maxDistance = 100
 
         // ライトの設定
         // 環境光源
         const ambientLight = new THREE.AmbientLight(0x888888, 1)
         // 平行光源
-        const directionalLight = new THREE.DirectionalLight(0xeeeeee, 1)
+        const directionalLight = new THREE.DirectionalLight(0xeeeeee, 2)
         // 平行光源の位置を設定する
-        directionalLight.position.set(5, 5, 5)
+        directionalLight.position.set(50, 0, 0)
         scene.add(ambientLight, directionalLight)
 
-        // 3D オブジェクトの作成
-        const loader = new THREE.TextureLoader()
-        const texture = loader.load("/images/moon.jpg")
-        const geometry = new THREE.SphereGeometry(15, 30, 30)
-        const material = new THREE.MeshPhongMaterial({ color: 0xffffff, map: texture })
-        const mesh = new THREE.Mesh(geometry, material)
-        scene.add(mesh)
+        // 3D オブジェクトの配置
+        const moon = createMoonMesh()
+        scene.add(moon)
+        const stars = createStarsMesh()
+        scene.add(stars)
 
         // アニメーションの設定
         const animate = () => {
@@ -60,12 +59,11 @@ export default function Home() {
             }
             mountRef.removeChild(renderer.domElement)
         })
-      })
+    })
 
     return (
         <main>
-            <Title>Home</Title>
-            <h1>Home</h1>
+            <Title>Moon - Planet Window</Title>
             <div ref={mountRef}></div>
         </main>
     )

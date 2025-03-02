@@ -9,9 +9,9 @@ export default function App() {
         <Router
             root={props => (
                 <MetaProvider>
-                    <Title>Space Weather</Title>
+                    <Title>Planet Window</Title>
                     <div>
-                        <a href="/">Home</a>
+                        <a href="/">Moon</a>
                     </div>
                     <Suspense>
                         {props.children}

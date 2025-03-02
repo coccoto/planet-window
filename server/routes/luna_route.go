@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"space-weather/handlers"
+	"planet-window/handlers"
 
 	"github.com/go-chi/chi/v5"
 )

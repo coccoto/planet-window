@@ -1,4 +1,4 @@
-module space-weather
+module planet-window
 
 go 1.22.9
 

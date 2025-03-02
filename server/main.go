@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 	"net/http"
-	"space-weather/core"
-	"space-weather/routes"
+	"planet-window/core"
+	"planet-window/routes"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
