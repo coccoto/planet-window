@@ -28,7 +28,7 @@ func main() {
 	router.Use(middleware.Recoverer)
 
 	// ルーティングを設定する
-	routes.SetupLunaRouter(router)
+	routes.SetupMoonRouter(router)
 
 	// HTTP サーバーを起動する
 	http.ListenAndServe(":3000", router)
