@@ -11,7 +11,7 @@ export default function App() {
                 <MetaProvider>
                     <Title>Planet Window</Title>
                     <div class='menu'>
-                        <a href="/">Moon</a>
+                        <a href="/"></a>
                     </div>
                     <Suspense>
                         {props.children}

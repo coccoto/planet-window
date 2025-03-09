@@ -1,12 +1,37 @@
 import * as THREE from "three"
 
+const radius = 15
+
+export function createSunMesh() {
+    const PATH = "/images/sun.jpg"
+
+    const loader = new THREE.TextureLoader()
+    const texture = loader.load(PATH)
+    const geometry = new THREE.SphereGeometry(radius, 30, 30)
+    const material = new THREE.MeshBasicMaterial({ 
+        color: 0xffffff, 
+        map: texture,
+    })
+    return new THREE.Mesh(geometry, material)
+}
+
+export function createEarthMesh() {
+    const PATH = "/images/earth.jpg"
+
+    const loader = new THREE.TextureLoader()
+    const texture = loader.load(PATH)
+    const geometry = new THREE.SphereGeometry(radius / 4, 30, 30)
+    const material = new THREE.MeshStandardMaterial({ color: 0xffffff, map: texture })
+    return new THREE.Mesh(geometry, material)
+}
+
 export function createMoonMesh() {
     const PATH = "/images/moon.jpg"
 
     const loader = new THREE.TextureLoader()
     const texture = loader.load(PATH)
-    const geometry = new THREE.SphereGeometry(15, 30, 30)
-    const material = new THREE.MeshPhongMaterial({ color: 0xffffff, map: texture })
+    const geometry = new THREE.SphereGeometry(radius / 8, 30, 30)
+    const material = new THREE.MeshStandardMaterial({ color: 0xffffff, map: texture })
     return new THREE.Mesh(geometry, material)
 }
 
