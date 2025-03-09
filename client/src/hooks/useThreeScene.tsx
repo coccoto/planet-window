@@ -1,7 +1,7 @@
 import { createEffect, onCleanup } from "solid-js"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
-import { createSunMesh, createEarthMesh, createMoonMesh, createStarsMesh } from "~/utils/threeHelpers"
+import { createSunMesh, createEarthMesh, createMoonMesh, createOrbitMesh, createStarsMesh } from "~/utils/threeHelpers"
 
 export default function useThreeScene(mountRef: HTMLDivElement | undefined) {
     let earthAngle = 0
@@ -44,15 +44,22 @@ export default function useThreeScene(mountRef: HTMLDivElement | undefined) {
         const sun = createSunMesh()
         sun.position.set(0, 0, 0)
         scene.add(sun)
+
         // 地球
-        const earth = createEarthMesh()
         const earthOrbitRadius = 100
+        const earth = createEarthMesh()
         scene.add(earth)
+        const earthOrbitLine = createOrbitMesh(earthOrbitRadius)
+        scene.add(earthOrbitLine)
+
         // 月
-        const moon = createMoonMesh()
         const moonOrbitRadius = 20
+        const moon = createMoonMesh()
         scene.add(moon)
-        // 宇宙
+        const moonOrbitLine = createOrbitMesh(moonOrbitRadius)
+        earth.add(moonOrbitLine)
+
+        // 星 (背景)
         const stars = createStarsMesh()
         scene.add(stars)
 
@@ -116,4 +123,3 @@ export default function useThreeScene(mountRef: HTMLDivElement | undefined) {
         })
     })
 }
-

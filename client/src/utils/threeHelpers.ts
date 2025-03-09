@@ -2,6 +2,9 @@ import * as THREE from "three"
 
 const RADIUS = 15
 
+/**
+ * @returns 太陽
+ */
 export function createSunMesh() {
     const PATH = "/images/sun.jpg"
 
@@ -12,6 +15,9 @@ export function createSunMesh() {
     return new THREE.Mesh(geometry, material)
 }
 
+/**
+ * @returns 地球
+ */
 export function createEarthMesh() {
     const PATH = "/images/earth.jpg"
 
@@ -22,6 +28,9 @@ export function createEarthMesh() {
     return new THREE.Mesh(geometry, material)
 }
 
+/**
+ * @returns 月
+ */
 export function createMoonMesh() {
     const PATH = "/images/moon.jpg"
 
@@ -32,6 +41,29 @@ export function createMoonMesh() {
     return new THREE.Mesh(geometry, material)
 }
 
+/**
+ * @param radius 軌道の半径
+ * @returns 軌道
+ */
+export function createOrbitMesh(radius: number): THREE.Line {
+    // 軌道の分割数の設定
+    const SEGMENTS = 128
+
+    const points = []
+    for (let i = 0; i <= SEGMENTS; i ++) {
+        const angle = (i / SEGMENTS) * Math.PI * 2
+        const x = radius * Math.cos(angle)
+        const z = radius * Math.sin(angle)
+        points.push(new THREE.Vector3(x, 0, z))
+    }
+    const geometry = new THREE.BufferGeometry().setFromPoints(points)
+    const material = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.2 })    
+    return new THREE.Line(geometry, material)
+}
+
+/**
+ * @returns 星
+ */
 export function createStarsMesh() {
     // 星の数
     const NUM_STARS = 1000
