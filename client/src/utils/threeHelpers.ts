@@ -1,17 +1,14 @@
 import * as THREE from "three"
 
-const radius = 15
+const RADIUS = 15
 
 export function createSunMesh() {
     const PATH = "/images/sun.jpg"
 
     const loader = new THREE.TextureLoader()
     const texture = loader.load(PATH)
-    const geometry = new THREE.SphereGeometry(radius, 30, 30)
-    const material = new THREE.MeshBasicMaterial({ 
-        color: 0xffffff, 
-        map: texture,
-    })
+    const geometry = new THREE.SphereGeometry(RADIUS, 30, 30)
+    const material = new THREE.MeshBasicMaterial({ color: 0xffffff, map: texture })
     return new THREE.Mesh(geometry, material)
 }
 
@@ -20,7 +17,7 @@ export function createEarthMesh() {
 
     const loader = new THREE.TextureLoader()
     const texture = loader.load(PATH)
-    const geometry = new THREE.SphereGeometry(radius / 4, 30, 30)
+    const geometry = new THREE.SphereGeometry(RADIUS / 4, 30, 30)
     const material = new THREE.MeshStandardMaterial({ color: 0xffffff, map: texture })
     return new THREE.Mesh(geometry, material)
 }
@@ -30,7 +27,7 @@ export function createMoonMesh() {
 
     const loader = new THREE.TextureLoader()
     const texture = loader.load(PATH)
-    const geometry = new THREE.SphereGeometry(radius / 8, 30, 30)
+    const geometry = new THREE.SphereGeometry(RADIUS / 8, 30, 30)
     const material = new THREE.MeshStandardMaterial({ color: 0xffffff, map: texture })
     return new THREE.Mesh(geometry, material)
 }
@@ -49,7 +46,7 @@ export function createStarsMesh() {
         vertices.push(x, y, z)
     }
     const geometry = new THREE.BufferGeometry()
-    geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3))
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
     const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.5 })
     return new THREE.Points(geometry, material)
 }
