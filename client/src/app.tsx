@@ -11,7 +11,8 @@ export default function App() {
                 <MetaProvider>
                     <Title>Planet Window</Title>
                     <div class='menu'>
-                        <a href="/"></a>
+                        <a href="/">home</a>
+                        <a href="/license">license</a>
                     </div>
                     <Suspense>
                         {props.children}

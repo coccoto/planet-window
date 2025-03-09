@@ -16,7 +16,7 @@ export default function useThreeScene(mountRef: HTMLDivElement | undefined) {
 
         // カメラの設定
         const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000)
-        camera.position.set(50, 0, 0)
+        camera.position.set(200, 200, 0)
 
         // レンダラーの設定
         const renderer = new THREE.WebGLRenderer()
