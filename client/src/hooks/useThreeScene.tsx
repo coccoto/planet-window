@@ -3,7 +3,7 @@ import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import { createSunMesh, createEarthMesh, createMoonMesh, createOrbitMesh, createStarsMesh } from "~/utils/threeHelpers"
 
-export default function useThreeScene(mountRef: HTMLDivElement | undefined) {
+export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
     let earthAngle = 0
     let moonAngle = 0
     let selectedCamera: THREE.Object3D | null = null
@@ -27,7 +27,6 @@ export default function useThreeScene(mountRef: HTMLDivElement | undefined) {
         const controls = new OrbitControls(camera, renderer.domElement)
         controls.enableDamping = true
         controls.enableZoom = true
-   
         controls.maxDistance = 500
 
         // ライトの設定
@@ -109,6 +108,53 @@ export default function useThreeScene(mountRef: HTMLDivElement | undefined) {
 
             // カメラのターゲットを更新
             updateCameraTarget()
+
+            renderer.render(scene, camera)
+            requestAnimationFrame(animate)
+        }
+        animate()
+
+        onCleanup(() => {
+            if (mountRef === undefined || mountRef === null) {
+                return
+            }
+            mountRef.removeChild(renderer.domElement)
+        })
+    })
+}
+
+
+export function useThreeBackgroundScene(mountRef: HTMLDivElement | undefined) {
+
+    createEffect(() => {
+        if (mountRef === undefined || mountRef === null) {
+            return
+        }
+        const scene = new THREE.Scene()
+
+        // カメラの設定
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000)
+        camera.position.set(200, 200, 0)
+
+        // レンダラーの設定
+        const renderer = new THREE.WebGLRenderer()
+        renderer.setSize(window.innerWidth, window.innerHeight)
+        mountRef.appendChild(renderer.domElement)
+
+        // カメラコントロールの設定
+        const controls = new OrbitControls(camera, renderer.domElement)
+        controls.enableDamping = true
+        controls.enableZoom = true
+        controls.maxDistance = 500
+
+        // 3D オブジェクトの配置
+        // 星 (背景)
+        const stars = createStarsMesh()
+        scene.add(stars)
+
+        // アニメーションの設定
+        const animate = () => {
+            controls.update()
 
             renderer.render(scene, camera)
             requestAnimationFrame(animate)
