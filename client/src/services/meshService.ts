@@ -3,6 +3,9 @@ import { MeshPlanetData } from "~/types/planetTypes"
 
 const RADIUS = 15
 
+/**
+ * @retrun 惑星
+ */
 function createPlanetMesh(data: MeshPlanetData, useMeshStandardMaterial: boolean): THREE.Mesh {
     const texture = new THREE.TextureLoader().load('/images/' + data.name + '.jpg')
     const geometry = new THREE.SphereGeometry(data.planetRadius, 30, 30)
