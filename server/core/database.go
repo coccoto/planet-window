@@ -11,18 +11,18 @@ import (
 	"planet-window/models"
 )
 
+var DB *gorm.DB
+
 func InitDB() {
-	var dsn string = fmt.Sprintf("%s:%s@tcp(%s)/%s",
+	var err error
+
+	var dsn string = fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true&loc=Local",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_DATABASE"))
 
-	var db *gorm.DB
-	var err error
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
-	if err != nil {
+	if DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{}); err != nil {
 		log.Fatal("Failed to connect to database. Error: " + err.Error())
 	}
 
@@ -30,7 +30,10 @@ func InitDB() {
 		os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_DATABASE"))
 
 	// migration
-	if err := db.AutoMigrate(&models.MstPlanet{}); err != nil {
+	if err := DB.AutoMigrate(
+			&models.MstPlanet{},
+			&models.MstSetting{},
+		); err != nil {
 		log.Fatal("Failed to migrate database. Error: " + err.Error())
 	}
 }

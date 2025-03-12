@@ -6,6 +6,6 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-func SetupMoonRouter(router *chi.Mux) {
-	router.Get("/moon", handlers.GetMoon)
+func SetupPlanetRouter(router *chi.Mux) {
+	router.Get("/planet", handlers.GetPlanet)
 }

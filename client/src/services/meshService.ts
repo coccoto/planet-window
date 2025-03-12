@@ -1,7 +1,84 @@
 import * as THREE from "three"
 import { MeshPlanetData } from "~/types/planetTypes"
 
-const RADIUS = 15
+const RADIUS = 10
+
+const planetDate = {
+    sun: { name: 'sun', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
+    mercury: { name: 'mercury', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
+    venus: { name: 'venus', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
+    earth: { name: 'earth', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
+    moon: { name: 'moon', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
+    mars: { name: 'mars', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
+    jupiter: { name: 'jupiter', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
+    saturn: { name: 'saturn', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
+    uranus: { name: 'uranus', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
+    neptune: { name: 'neptune', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
+}
+
+/**
+ * @returns 太陽
+ */
+export function createSunMesh() {
+    return createPlanetMesh(planetDate.sun, false)
+}
+/**
+ * @returns 水星
+ */
+export function createMercuryMesh() {
+    return createPlanetMesh(planetDate.mercury, true)
+}
+/**
+ * @returns 金星
+ */
+export function createVenusMesh() {
+    return createPlanetMesh(planetDate.venus, true)
+}
+/**
+ * @returns 地球
+ */
+export function createEarthMesh() {
+    return createPlanetMesh(planetDate.earth, true)
+}
+/**
+ * @returns 月
+ */
+export function createMoonMesh() {
+    return createPlanetMesh(planetDate.moon, true)
+}
+/**
+ * @returns 火星
+ */
+export function createMarsMesh() {
+    return createPlanetMesh(planetDate.mars, true)
+}
+/**
+ * @returns 木星
+ */
+export function createJupiterMesh() {
+    return createPlanetMesh(planetDate.jupiter, true)
+}
+/**
+ * @returns 土星
+ */
+export function createSaturnMesh() {
+    const mesh = createPlanetMesh(planetDate.saturn, true)
+    // 土星の環を追加
+    addRingMesh(mesh, RADIUS / 0.6, RADIUS / 0.9)
+    return mesh
+}
+/**
+ * @returns 天王星
+ */
+export function createUranusMesh() {
+    return createPlanetMesh(planetDate.uranus, true)
+}
+/**
+ * @returns 海王星
+ */
+export function createNeptuneMesh() {
+    return createPlanetMesh(planetDate.neptune, true)
+}
 
 /**
  * @retrun 惑星
@@ -17,208 +94,37 @@ function createPlanetMesh(data: MeshPlanetData, useMeshStandardMaterial: boolean
 }
 
 /**
- * @returns 太陽
+ * @param innerRadius 内側の半径
+ * @param outerRadius 外側の半径
  */
-export function createSunMesh() {
-    const data = {
-        name: "sun",
-        planetRadius: RADIUS,
-        rotationSpeed: 0,
-        orbitSpeed: 0,
-        orbitRadius: 0,
-    }
-    return createPlanetMesh(data, false)
-}
+function addRingMesh(mesh: THREE.Mesh, innerRadius: number, outerRadius: number) {
+    // リングジオメトリを作成する
+    const SEGMENTS = 128 // 円周の分割数
+    const geometry = new THREE.RingGeometry(innerRadius, outerRadius, SEGMENTS)
+    const position = geometry.attributes.position // 円の頂点座標
+    const count = position.count // 円の頂点の数
+    const uv = geometry.attributes.uv // UV マッピング座標
 
-/**
- * @returns 水星
- */
-export function createMercuryMesh() {
-    const data = {
-        name: "mercury",
-        planetRadius: RADIUS / 4,
-        rotationSpeed: 0.001,
-        orbitSpeed: 0.01,
-        orbitRadius: 50,
-    }
-    return createPlanetMesh(data, true)
-}
-
-/**
- * @returns 金星
- */
-export function createVenusMesh() {
-    const data = {
-        name: "venus",
-        planetRadius: RADIUS / 4,
-        rotationSpeed: 0.001,
-        orbitSpeed: 0.01,
-        orbitRadius: 80,
-    }
-    return createPlanetMesh(data, true)
-}
-
-/**
- * @returns 地球
- */
-export function createEarthMesh() {
-    const data = {
-        name: "earth",
-        planetRadius: RADIUS / 4,
-        rotationSpeed: 0.001,
-        orbitSpeed: 0.01,
-        orbitRadius: 100,
-    }
-    return createPlanetMesh(data, true)
-}
-
-/**
- * @returns 月
- */
-export function createMoonMesh() {
-    const data = {
-        name: "moon",
-        planetRadius: RADIUS / 8,
-        rotationSpeed: 0.003,
-        orbitSpeed: 0.03,
-        orbitRadius: 20,
-    }
-    return createPlanetMesh(data, true)
-}
-
-/**
- * @returns 火星
- */
-export function createMarsMesh() {
-    const data = {
-        name: "mars",
-        planetRadius: RADIUS / 5,
-        rotationSpeed: 0.001,
-        orbitSpeed: 0.008,
-        orbitRadius: 130,
-    }
-    return createPlanetMesh(data, true)
-}
-
-/**
- * @returns 木星
- */
-export function createJupiterMesh() {
-    const data = {
-        name: "jupiter",
-        planetRadius: RADIUS / 1.5,
-        rotationSpeed: 0.002,
-        orbitSpeed: 0.004,
-        orbitRadius: 200,
-    }
-    return createPlanetMesh(data, true)
-}
-
-/**
- * @returns 土星
- */
-export function createSaturnMesh() {
-    const data = {
-        name: "saturn",
-        planetRadius: RADIUS / 1.4,
-        rotationSpeed: 0.0015,
-        orbitSpeed: 0.0025,
-        orbitRadius: 250,
-    }
-    const mesh = createPlanetMesh(data, true)
-
-    // 土星の環を追加
-    addRing(mesh, RADIUS / 1.3, RADIUS / 1.0)
-
-    return mesh;
-}
-
-/**
- * @returns 天王星
- */
-export function createUranusMesh() {
-    const data = {
-        name: "uranus",
-        planetRadius: RADIUS / 1.8,
-        rotationSpeed: 0.001,
-        orbitSpeed: 0.002,
-        orbitRadius: 300,
-    }
-    return createPlanetMesh(data, true)
-}
-
-/**
- * @returns 海王星
- */
-export function createNeptuneMesh() {
-    const data = {
-        name: "neptune",
-        planetRadius: RADIUS / 2.5,
-        rotationSpeed: 0.001,
-        orbitSpeed: 0.001,
-        orbitRadius: 350,
-    }
-    return createPlanetMesh(data, true)
-}
-
-/**
- * リングジオメトリのUV座標を調整
- * @todo
- */
-function adjustRingUV(geometry: THREE.RingGeometry, innerRadius: number, outerRadius: number) {
-    const pos = geometry.attributes.position
-    const uv = geometry.attributes.uv
-    const count = pos.count
-
-    for (let i = 0; i < count; i++) {
-        const vertex = new THREE.Vector3().fromBufferAttribute(pos, i)
-
-        const angle = Math.atan2(vertex.y, vertex.x)
-        const radius = Math.hypot(vertex.x, vertex.y)
-
-        const u = (radius - innerRadius) / (outerRadius - innerRadius)
-        const v = (angle / (2 * Math.PI)) + 0.5
-
+    for (let i = 0; i < count; i ++) {
+        const vertex = new THREE.Vector3().fromBufferAttribute(position, i) // 頂点の座標を取得
+        const angle = Math.atan2(vertex.y, vertex.x) // 原点から見た頂点の角度を計算
+        const radius = Math.hypot(vertex.x, vertex.y) // 原点から見た頂点の半径を計算
+        
+        // UV マッピングを設定する
+        const u = (radius - innerRadius) / (outerRadius - innerRadius) // 半径に応じた U 値
+        const v = (angle / (2 * Math.PI)) + 0.5 // 角度に応じた V 値
         uv.setXY(i, u, v)
     }
+    // UV マッピングを更新する
     geometry.attributes.uv.needsUpdate = true
+
+    const texture = new THREE.TextureLoader().load('/images/' + mesh.userData.name + '_ring.jpg')
+    // マテリアルの作成（リングの外観を決定）
+    const material = new THREE.MeshStandardMaterial({ map: texture, color: 0xffffff, side: THREE.DoubleSide, transparent: true, opacity: 0.8 })
+    const ringMesh = new THREE.Mesh(geometry, material)
+    ringMesh.rotation.x = Math.PI / 2
+    mesh.add(ringMesh)
 }
-
-/**
- * テクスチャをロードし、マテリアルを作成
- * @todo
- */
-function createRingMaterial(texturePath: string): THREE.Material {
-    const texture = new THREE.TextureLoader().load(texturePath)
-    texture.wrapT = THREE.RepeatWrapping
-    texture.repeat.set(1, 6)
-
-    return new THREE.MeshStandardMaterial({
-        map: texture,
-        color: 0xffffff,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.8
-    })
-}
-
-/**
- * @returns 環
- * @todo
- */
-function addRing(mesh: THREE.Mesh, innerRadius: number, outerRadius: number) {
-    const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 128)
-    adjustRingUV(geometry, innerRadius, outerRadius)
-
-    const texturePath = '/images/' + mesh.userData.name + '_ring.jpg'
-    const material = createRingMaterial(texturePath)
-
-    const ring = new THREE.Mesh(geometry, material)
-    ring.rotation.x = Math.PI / 2
-
-    mesh.add(ring)
-}
-
 
 /**
  * @param radius 軌道の半径

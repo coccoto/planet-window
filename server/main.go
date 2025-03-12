@@ -16,7 +16,6 @@ func main() {
 	if err != nil {
 		log.Fatal("The .env file is not configured.")
 	}
-
 	// データベースを初期化する
 	core.InitDB()
 
@@ -28,9 +27,9 @@ func main() {
 	router.Use(middleware.Recoverer)
 
 	// ルーティングを設定する
-	routes.SetupMoonRouter(router)
+	routes.SetupPlanetRouter(router)
 
 	// HTTP サーバーを起動する
-	http.ListenAndServe(":3000", router)
-	log.Println("3000")
+	const PORT string = ":3000"
+	http.ListenAndServe(PORT, router)
 }
