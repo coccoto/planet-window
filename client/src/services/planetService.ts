@@ -9,7 +9,8 @@ import fetchRequest from "~/utils/fetchRequest"
 export async function setupPlanet(scene: THREE.Scene): Promise<PlanetMeshList> {
     const planetMeshList: PlanetMeshList = initPlanetMeshList()
     // 3D モデルとして表示する星のサイズなどを取得する
-    const planetConfigList = await fetchRequest<PlanetConfigList>('http://localhost:18040/api/planet', { method: 'get' })
+    const origin: string = import.meta.env.VITE_API_URL
+    const planetConfigList = await fetchRequest<PlanetConfigList>(origin + '/api/planet', { method: 'get' })
 
     // 太陽
     const sun = createSunMesh(planetConfigList.sun)
