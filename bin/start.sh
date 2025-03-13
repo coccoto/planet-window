@@ -22,3 +22,5 @@ CLIENT_DIR="$SCRIPT_DIR/../client"
 # サーバーを並列実行する
 runGoServer "$SERVER_DIR" &
 runNodeServer "$CLIENT_DIR" &
+
+wait
