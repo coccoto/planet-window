@@ -80,7 +80,6 @@ export async function setupPlanet(scene: THREE.Scene): Promise<PlanetMeshList> {
     scene.add(neptuneOrbitLine)
     planetMeshList.neptune = { mesh: neptune, parent: sun }
 
-    setupPlanetMarker(scene, planetMeshList)
     return planetMeshList
 }
 

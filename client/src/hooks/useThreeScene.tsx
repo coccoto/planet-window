@@ -8,15 +8,15 @@ import { PlanetMeshList } from "~/types/planetTypes"
 export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
     const planetAngles: Record<string, number> = {
         'sun': 0,
-        'mercury': 0,
-        'venus': 0,
-        'earth': 0,
-        'moon': 0,
-        'mars': 0,
-        'jupiter': 0,
-        'saturn': 0,
-        'uranus': 0,
-        'neptune': 0
+        'mercury': Math.random() * Math.PI * 2,
+        'venus': Math.random() * Math.PI * 2,
+        'earth': Math.random() * Math.PI * 2,
+        'moon': Math.random() * Math.PI * 2,
+        'mars': Math.random() * Math.PI * 2,
+        'jupiter': Math.random() * Math.PI * 2,
+        'saturn': Math.random() * Math.PI * 2,
+        'uranus': Math.random() * Math.PI * 2,
+        'neptune': Math.random() * Math.PI * 2,
     }
     let selectedCamera: THREE.Object3D | null = null
 
