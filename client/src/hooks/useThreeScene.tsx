@@ -2,7 +2,7 @@ import { createEffect, onCleanup } from "solid-js"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import { createStarsMesh } from "~/services/meshService"
-import { setupPlanet } from "~/services/planetService"
+import { setupPlanet, setupPlanetMarker } from "~/services/planetService"
 import { PlanetMeshList } from "~/types/planetTypes"
 
 export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
@@ -55,6 +55,8 @@ export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
         // 星 (背景)
         const stars = createStarsMesh()
         scene.add(stars)
+        // 惑星マーカー
+        const planetMarkerList = setupPlanetMarker(scene, planetMeshList)
 
         // クリックイベントの設定
         const raycaster = new THREE.Raycaster()
@@ -99,13 +101,15 @@ export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
             for (const key of Object.keys(planetMeshList) as Array<keyof PlanetMeshList>) {
                 const planetMesh = planetMeshList[key]
 
-                // 惑星の公転の更新
+                // 惑星の公転の更新する
                 planetAngles[key] += planetMesh.mesh.userData.orbitSpeed
-                // 惑星の自転の更新
+                // 惑星の自転の更新する
                 const rotationFactor = 0.001
                 planetMesh.mesh.rotation.y += rotationFactor / planetMesh.mesh.userData.rotationSpeed
+                // 惑星マーカーの位置を更新する
+                planetMarkerList[key].position.copy(planetMesh.mesh.position);
 
-                // 惑星の軌道の更新
+                // 惑星の軌道の更新する
                 if (planetMesh.parent === null) {
                     planetMesh.mesh.position.x = planetMesh.mesh.userData.orbitRadius * Math.cos(planetAngles[key])
                     planetMesh.mesh.position.z = planetMesh.mesh.userData.orbitRadius * Math.sin(planetAngles[key])

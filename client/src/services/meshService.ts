@@ -152,3 +152,28 @@ export function createStarsMesh() {
     const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.5 })
     return new THREE.Points(geometry, material)
 }
+
+/**
+ * @returns 惑星マーカー
+ */
+export function createPlanetMarker(): THREE.Sprite {
+    // canvas
+    const canvas = document.createElement('canvas')
+    canvas.width = 64
+    canvas.height = 64
+    const context = canvas.getContext('2d')
+
+    if (context !== null) {
+        context.beginPath()
+        context.arc(32, 32, 16, 0, 2 * Math.PI)
+        context.strokeStyle = '#' + 0xffffff.toString(16).padStart(6, '0')
+        context.stroke()
+    }
+    // texture
+    const texture = new THREE.CanvasTexture(canvas)
+    const material = new THREE.SpriteMaterial({ map: texture, sizeAttenuation: false, transparent: true, opacity: 0.5 })
+    // sprite
+    const sprite = new THREE.Sprite(material)
+    sprite.scale.set(0.05, 0.05, 1)
+    return sprite
+}

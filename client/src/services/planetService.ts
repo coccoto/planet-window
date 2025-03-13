@@ -1,8 +1,9 @@
 import * as THREE from "three"
 import { PlanetMeshList, initPlanetMeshList, PlanetConfigList } from "~/types/planetTypes"
-import { createSunMesh, createMercuryMesh, createVenusMesh, createEarthMesh, createMarsMesh, 
-         createJupiterMesh, createSaturnMesh, createUranusMesh, createNeptuneMesh, 
-         createMoonMesh, createOrbitMesh } from "~/services/meshService"
+import { 
+    createSunMesh, createMercuryMesh, createVenusMesh, createEarthMesh, createMarsMesh, 
+    createJupiterMesh, createSaturnMesh, createUranusMesh, createNeptuneMesh, createMoonMesh,
+    createOrbitMesh, createPlanetMarker} from "~/services/meshService"
 import fetchRequest from "~/utils/fetchRequest"
 
 export async function setupPlanet(scene: THREE.Scene): Promise<PlanetMeshList> {
@@ -79,6 +80,18 @@ export async function setupPlanet(scene: THREE.Scene): Promise<PlanetMeshList> {
     scene.add(neptuneOrbitLine)
     planetMeshList.neptune = { mesh: neptune, parent: sun }
 
+    setupPlanetMarker(scene, planetMeshList)
     return planetMeshList
 }
 
+export function setupPlanetMarker(scene: THREE.Scene, planetMeshList: PlanetMeshList): Record<string, THREE.Sprite> {
+    const planetMarkers: Record<string, THREE.Sprite> = {}
+    
+    for (const key of Object.keys(planetMeshList) as Array<keyof PlanetMeshList>) {
+        const marker = createPlanetMarker()
+        marker.position.copy(planetMeshList[key].mesh.position)
+        scene.add(marker)
+        planetMarkers[key] = marker
+    }
+    return planetMarkers
+}
