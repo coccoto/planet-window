@@ -8,7 +8,6 @@ import (
 )
 
 func SeedMstPlanet(db *gorm.DB) {
-
 	const sunPlanetRadiusScale = 1.0 / 50000.0
 	const otherPlanetRadiusScale = 1.0 / 10000.0
 	const rotationSpeedScale = 1.0
@@ -18,12 +17,12 @@ func SeedMstPlanet(db *gorm.DB) {
 
 	var planets []models.MstPlanet = []models.MstPlanet{
 		{
-			PlanetId: 1,
-			PlanetName: "sun",
-			PlanetRadius: 696340.00 * sunPlanetRadiusScale,
-			RotationSpeed: 25.05 * rotationSpeedScale,
-			OrbitSpeed: 0.00 * orbitSpeedScale,
-			OrbitRadius: 0.00 * orbitRadiusScale,
+			PlanetId: 1, // 惑星ID
+			PlanetName: "sun", // 惑星名
+			PlanetRadius: 696340.00 * sunPlanetRadiusScale, // 半径
+			RotationSpeed: 25.05 * rotationSpeedScale, // 自転速度
+			OrbitSpeed: 0.00 * orbitSpeedScale, // 公転速度
+			OrbitRadius: 0.00 * orbitRadiusScale, // 公転半径
 		},
 		{
 			PlanetId: 2,

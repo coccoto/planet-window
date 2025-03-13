@@ -11,12 +11,13 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("The .env file is not configured.")
+		log.Fatal("Failed to load .env")
 	}
 	// データベースを初期化する
 	core.InitDB()
+
 	// マイグレーションを実行する
 	core.AutoMigrate()
 	// シードデータを追加する
-	seeds.SeedMstPlanet(core.DB)
+	seeds.SeedMstPlanet(core.GetDB())
 }

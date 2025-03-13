@@ -23,7 +23,7 @@ func GetPlanet(responseWriter http.ResponseWriter, request *http.Request) {
 	result := make(map[string]PlanetData)
 
 	var mstPlanets []models.MstPlanet
-	if err := core.DB.Find(&mstPlanets).Error; err != nil {
+	if err := core.GetDB().Find(&mstPlanets).Error; err != nil {
 		return
 	}
 

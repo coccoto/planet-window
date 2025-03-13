@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sync"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -11,32 +12,47 @@ import (
 	"planet-window/models"
 )
 
-var DB *gorm.DB
+var (
+	db *gorm.DB
+	onceDb sync.Once
+)
 
 func InitDB() {
-	var err error
+	onceDb.Do(func() {
+		var err error
 
-	var dsn string = fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true&loc=Local",
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASSWORD"),
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_DATABASE"))
+		dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true&loc=Local",
+			os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), os.Getenv("DB_DATABASE"),
+		)
 
-	if DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{}); err != nil {
-		log.Fatal("Failed to connect to database. Error: " + err.Error())
+		db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		if err != nil {
+			log.Fatalf("Failed to connect to the database. Host: %s, User: %s, Database: %s. Error: %v",
+				os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_DATABASE"),
+				err,
+			)
+		}
+
+		log.Printf("Connected to the database. Host: %s, User: %s, Database: %s",
+			os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_DATABASE"),
+		)
+	})
+}
+
+func GetDB() *gorm.DB {
+	if db == nil {
+		log.Fatal("Database not initialized. Call InitDB() before using GetDB().")
 	}
-
-	log.Printf("Connection to the database was successful. Host: %s User: %s Database: %s",
-		os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_DATABASE"))
+	return db
 }
 
 func AutoMigrate() {
-	// migration
-	if err := DB.AutoMigrate(
+	if err := GetDB().AutoMigrate(
 		&models.MstPlanet{},
 	); err != nil {
-	log.Fatal("Failed to migrate database. Error: " + err.Error())
+		log.Fatalf("Failed to migrate the database. Host: %s, User: %s, Database: %s. Error: %v",
+			os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_DATABASE"),
+			err,
+		)
+	}
 }
-}
-
-
