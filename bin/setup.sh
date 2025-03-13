@@ -14,11 +14,11 @@ function build() {
 # 本スクリプトファイルのディレクトリをセットする
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 
-# root ディレクトリをセットする
-ROOT_DIR="$SCRIPT_DIR/.."
+# client ディレクトリをセットする
+CLIENT_DIR="$SCRIPT_DIR/../client"
 
 # アプリケーションをセットアップする
-npmInstall "$ROOT_DIR"
-build "$ROOT_DIR"
+npmInstall "$CLIENT_DIR"
+build "$CLIENT_DIR"
 
 echo '[INFO] client is complete.'
