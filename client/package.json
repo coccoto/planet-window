@@ -2,14 +2,18 @@
   "name": "example-basic",
   "type": "module",
   "scripts": {
-    "dev-server": "vinxi dev",
-    "build": "vinxi build",
-    "start": "vinxi start"
+    "dev-server": "vinxi dev --port 18050",
+    "release": "run-s release:clean release:build",
+    "release:clean": "rimraf .output",
+    "release:build": "vinxi build",
+    "start": "vinxi start --port 18050"
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "^1.1.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^6.0.1",
     "solid-js": "^1.9.5",
     "three": "^0.174.0",
     "vinxi": "^0.5.3"

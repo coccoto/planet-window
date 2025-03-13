@@ -1,90 +1,75 @@
 import * as THREE from "three"
-import { MeshPlanetData } from "~/types/planetTypes"
-
-const RADIUS = 10
-
-const planetDate = {
-    sun: { name: 'sun', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
-    mercury: { name: 'mercury', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
-    venus: { name: 'venus', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
-    earth: { name: 'earth', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
-    moon: { name: 'moon', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
-    mars: { name: 'mars', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
-    jupiter: { name: 'jupiter', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
-    saturn: { name: 'saturn', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
-    uranus: { name: 'uranus', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
-    neptune: { name: 'neptune', planetRadius: , rotationSpeed: , orbitSpeed: , orbitRadius:  },
-}
+import { PlanetConfig } from "~/types/planetTypes"
 
 /**
  * @returns 太陽
  */
-export function createSunMesh() {
-    return createPlanetMesh(planetDate.sun, false)
+export function createSunMesh(planetConfig: PlanetConfig) {
+    return createPlanetMesh(planetConfig, false)
 }
 /**
  * @returns 水星
  */
-export function createMercuryMesh() {
-    return createPlanetMesh(planetDate.mercury, true)
+export function createMercuryMesh(planetConfig: PlanetConfig) {
+    return createPlanetMesh(planetConfig, true)
 }
 /**
  * @returns 金星
  */
-export function createVenusMesh() {
-    return createPlanetMesh(planetDate.venus, true)
+export function createVenusMesh(planetConfig: PlanetConfig) {
+    return createPlanetMesh(planetConfig, true)
 }
 /**
  * @returns 地球
  */
-export function createEarthMesh() {
-    return createPlanetMesh(planetDate.earth, true)
+export function createEarthMesh(planetConfig: PlanetConfig) {
+    return createPlanetMesh(planetConfig, true)
 }
 /**
  * @returns 月
  */
-export function createMoonMesh() {
-    return createPlanetMesh(planetDate.moon, true)
+export function createMoonMesh(planetConfig: PlanetConfig) {
+    return createPlanetMesh(planetConfig, true)
 }
 /**
  * @returns 火星
  */
-export function createMarsMesh() {
-    return createPlanetMesh(planetDate.mars, true)
+export function createMarsMesh(planetConfig: PlanetConfig) {
+    return createPlanetMesh(planetConfig, true)
 }
 /**
  * @returns 木星
  */
-export function createJupiterMesh() {
-    return createPlanetMesh(planetDate.jupiter, true)
+export function createJupiterMesh(planetConfig: PlanetConfig) {
+    return createPlanetMesh(planetConfig, true)
 }
 /**
  * @returns 土星
  */
-export function createSaturnMesh() {
-    const mesh = createPlanetMesh(planetDate.saturn, true)
+export function createSaturnMesh(planetConfig: PlanetConfig) {
+    const mesh = createPlanetMesh(planetConfig, true)
     // 土星の環を追加
-    addRingMesh(mesh, RADIUS / 0.6, RADIUS / 0.9)
+    // addRingMesh(mesh, RADIUS / 0.6, RADIUS / 0.9)
     return mesh
 }
 /**
  * @returns 天王星
  */
-export function createUranusMesh() {
-    return createPlanetMesh(planetDate.uranus, true)
+export function createUranusMesh(planetConfig: PlanetConfig) {
+    return createPlanetMesh(planetConfig, true)
 }
 /**
  * @returns 海王星
  */
-export function createNeptuneMesh() {
-    return createPlanetMesh(planetDate.neptune, true)
+export function createNeptuneMesh(planetConfig: PlanetConfig) {
+    return createPlanetMesh(planetConfig, true)
 }
 
 /**
  * @retrun 惑星
  */
-function createPlanetMesh(data: MeshPlanetData, useMeshStandardMaterial: boolean): THREE.Mesh {
-    const texture = new THREE.TextureLoader().load('/images/' + data.name + '.jpg')
+function createPlanetMesh(data: PlanetConfig, useMeshStandardMaterial: boolean): THREE.Mesh {
+    const texture = new THREE.TextureLoader().load('/images/' + data.planetName + '.jpg')
     const geometry = new THREE.SphereGeometry(data.planetRadius, 30, 30)
 
     const material = useMeshStandardMaterial ? new THREE.MeshStandardMaterial({ color: 0xffffff, map: texture }) : new THREE.MeshBasicMaterial({ color: 0xffffff, map: texture })
@@ -118,7 +103,7 @@ function addRingMesh(mesh: THREE.Mesh, innerRadius: number, outerRadius: number)
     // UV マッピングを更新する
     geometry.attributes.uv.needsUpdate = true
 
-    const texture = new THREE.TextureLoader().load('/images/' + mesh.userData.name + '_ring.jpg')
+    const texture = new THREE.TextureLoader().load('/images/' + mesh.userData.planetName + '_ring.jpg')
     // マテリアルの作成（リングの外観を決定）
     const material = new THREE.MeshStandardMaterial({ map: texture, color: 0xffffff, side: THREE.DoubleSide, transparent: true, opacity: 0.8 })
     const ringMesh = new THREE.Mesh(geometry, material)
@@ -153,7 +138,7 @@ export function createStarsMesh() {
     // 星の数
     const NUM_STARS = 1000
     // 密度
-    const SPREAD_RADIUS = 2000
+    const SPREAD_RADIUS = 20000
 
     const vertices = []
     for (let i = 0; i < NUM_STARS; i ++) {

@@ -8,17 +8,94 @@ import (
 )
 
 func SeedMstPlanet(db *gorm.DB) {
+
+	const sunPlanetRadiusScale = 1.0 / 50000.0
+	const otherPlanetRadiusScale = 1.0 / 10000.0
+	const rotationSpeedScale = 1.0 / 1000.0
+	const orbitSpeedScale = 1.0 / 100000.0
+	const orbitRadiusScale = 1.0 / 1000000.0
+
 	var planets []models.MstPlanet = []models.MstPlanet{
-		{PlanetId: 1, PlanetName: "sun", PlanetRadius: 695700, RotationSpeed: 609.12, OrbitSpeed: 0, OrbitRadius: 0},
-		{PlanetId: 2, PlanetName: "mercury", PlanetRadius: 2439.7, RotationSpeed: 1407.6, OrbitSpeed: 47.87, OrbitRadius: 57.91},
-		{PlanetId: 3, PlanetName: "venus", PlanetRadius: 6051.8, RotationSpeed: -5832.5, OrbitSpeed: 35.02, OrbitRadius: 108.2},
-		{PlanetId: 4, PlanetName: "earth", PlanetRadius: 6371, RotationSpeed: 23.93, OrbitSpeed: 29.78, OrbitRadius: 149.6},
-		{PlanetId: 5, PlanetName: "moon", PlanetRadius: 1737.4, RotationSpeed: 655.7, OrbitSpeed: 1.02, OrbitRadius: 0.384},
-		{PlanetId: 6, PlanetName: "mars", PlanetRadius: 3389.5, RotationSpeed: 24.62, OrbitSpeed: 24.07, OrbitRadius: 227.9},
-		{PlanetId: 7, PlanetName: "jupiter", PlanetRadius: 69911, RotationSpeed: 9.93, OrbitSpeed: 13.07, OrbitRadius: 778.5},
-		{PlanetId: 8, PlanetName: "saturn", PlanetRadius: 58232, RotationSpeed: 10.66, OrbitSpeed: 9.69, OrbitRadius: 1434},
-		{PlanetId: 9, PlanetName: "uranus", PlanetRadius: 25362, RotationSpeed: -17.24, OrbitSpeed: 6.81, OrbitRadius: 2871},
-		{PlanetId: 10, PlanetName: "neptune", PlanetRadius: 24622, RotationSpeed: 16.11, OrbitSpeed: 5.43, OrbitRadius: 4495},
+		{
+			PlanetId: 1,
+			PlanetName: "sun",
+			PlanetRadius: 696340.00 * sunPlanetRadiusScale,
+			RotationSpeed: 25.05 * rotationSpeedScale,
+			OrbitSpeed: 0.00 * orbitSpeedScale,
+			OrbitRadius: 0.00 * orbitRadiusScale,
+		},
+		{
+			PlanetId: 2,
+			PlanetName: "mercury",
+			PlanetRadius: 2439.70 * otherPlanetRadiusScale,
+			RotationSpeed: 58.65 * rotationSpeedScale,
+			OrbitSpeed: 47.36 * orbitSpeedScale,
+			OrbitRadius: 57910000.00 * orbitRadiusScale,
+		},
+		{
+			PlanetId: 3,
+			PlanetName: "venus",
+			PlanetRadius: 6051.80 * otherPlanetRadiusScale,
+			RotationSpeed: -243.02 * rotationSpeedScale,
+			OrbitSpeed: 35.02 * orbitSpeedScale,
+			OrbitRadius: 108200000.00 * orbitRadiusScale,
+		},
+		{
+			PlanetId: 4,
+			PlanetName: "earth",
+			PlanetRadius: 6378.14 * otherPlanetRadiusScale,
+			RotationSpeed: 1.00 * rotationSpeedScale,
+			OrbitSpeed: 29.78 * orbitSpeedScale,
+			OrbitRadius: 149600000.00 * orbitRadiusScale,
+		},
+		{
+			PlanetId: 5,
+			PlanetName: "moon",
+			PlanetRadius: 1737.40 * otherPlanetRadiusScale,
+			RotationSpeed: 27.32 * rotationSpeedScale,
+			OrbitSpeed: 1.02 * orbitSpeedScale,
+			OrbitRadius: 384400.00 * orbitRadiusScale,
+		},
+		{
+			PlanetId: 6,
+			PlanetName: "mars",
+			PlanetRadius: 3396.20 * otherPlanetRadiusScale,
+			RotationSpeed: 1.03 * rotationSpeedScale,
+			OrbitSpeed: 24.08 * orbitSpeedScale,
+			OrbitRadius: 227940000.00 * orbitRadiusScale,
+		},
+		{
+			PlanetId: 7,
+			PlanetName: "jupiter",
+			PlanetRadius: 71492.00 * otherPlanetRadiusScale,
+			RotationSpeed: 0.41 * rotationSpeedScale,
+			OrbitSpeed: 13.07 * orbitSpeedScale,
+			OrbitRadius: 778330000.00 * orbitRadiusScale,
+		},
+		{
+			PlanetId: 8,
+			PlanetName: "saturn",
+			PlanetRadius: 60268.00 * otherPlanetRadiusScale,
+			RotationSpeed: 0.45 * rotationSpeedScale,
+			OrbitSpeed: 9.68 * orbitSpeedScale,
+			OrbitRadius: 1433500000.00 * orbitRadiusScale,
+		},
+		{
+			PlanetId: 9,
+			PlanetName: "uranus",
+			PlanetRadius: 25559.00 * otherPlanetRadiusScale,
+			RotationSpeed: -0.72 * rotationSpeedScale,
+			OrbitSpeed: 6.80 * orbitSpeedScale,
+			OrbitRadius: 2872500000.00 * orbitRadiusScale,
+		},
+		{
+			PlanetId: 10,
+			PlanetName: "neptune",
+			PlanetRadius: 24764.00 * otherPlanetRadiusScale,
+			RotationSpeed: 0.67 * rotationSpeedScale,
+			OrbitSpeed: 5.43 * orbitSpeedScale,
+			OrbitRadius: 4495100000.00 * orbitRadiusScale,
+		},
 	}
 
 	db.Clauses(clause.OnConflict{

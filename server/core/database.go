@@ -32,7 +32,6 @@ func InitDB() {
 	// migration
 	if err := DB.AutoMigrate(
 			&models.MstPlanet{},
-			&models.MstSetting{},
 		); err != nil {
 		log.Fatal("Failed to migrate database. Error: " + err.Error())
 	}

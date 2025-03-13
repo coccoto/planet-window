@@ -3,31 +3,31 @@ import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import { createStarsMesh } from "~/services/meshService"
 import { setupPlanet } from "~/services/planetService"
-import { PlanetModels, PlanetName } from "~/types/planetTypes"
+import { PlanetMeshList } from "~/types/planetTypes"
 
 export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
-    const planetAngles: Record<PlanetName, number> = {
-        [PlanetName.Sun]: 0,
-        [PlanetName.Mercury]: 0,
-        [PlanetName.Venus]: 0,
-        [PlanetName.Earth]: 0,
-        [PlanetName.Moon]: 0,
-        [PlanetName.Mars]: 0,
-        [PlanetName.Jupiter]: 0,
-        [PlanetName.Saturn]: 0,
-        [PlanetName.Uranus]: 0,
-        [PlanetName.Neptune]: 0
+    const planetAngles: Record<string, number> = {
+        'sun': 0,
+        'mercury': 0,
+        'venus': 0,
+        'earth': 0,
+        'moon': 0,
+        'mars': 0,
+        'jupiter': 0,
+        'saturn': 0,
+        'uranus': 0,
+        'neptune': 0
     }
     let selectedCamera: THREE.Object3D | null = null
 
-    createEffect(() => {
+    createEffect(async () => {
         if (mountRef === undefined || mountRef === null) {
             return
         }
         const scene = new THREE.Scene()
 
         // カメラの設定
-        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000)
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 50000)
         camera.position.set(200, 200, 0)
 
         // レンダラーの設定
@@ -39,7 +39,7 @@ export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
         const controls = new OrbitControls(camera, renderer.domElement)
         controls.enableDamping = true
         controls.enableZoom = true
-        controls.maxDistance = 600
+        controls.maxDistance = 10000
 
         // ライトの設定
         // 環境光源
@@ -51,7 +51,7 @@ export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
         scene.add(sunLight)
 
         // 3D オブジェクトの配置
-        const planetModels: PlanetModels = setupPlanet(scene)
+        const planetMeshList: PlanetMeshList = await setupPlanet(scene)
         // 星 (背景)
         const stars = createStarsMesh()
         scene.add(stars)
@@ -66,7 +66,7 @@ export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
             mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
 
             raycaster.setFromCamera(mouse, camera)
-            const meshes = Object.values(planetModels).map((model) => {
+            const meshes = Object.values(planetMeshList).map((model) => {
                 return model.mesh
             })
             const intersects = raycaster.intersectObjects(meshes)
@@ -92,25 +92,24 @@ export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
         const animate = () => {
             controls.update()
 
-            for (const key of Object.keys(planetModels) as Array<keyof PlanetModels>) {
-                const planetModel = planetModels[key]
+            for (const key of Object.keys(planetMeshList) as Array<keyof PlanetMeshList>) {
+                const planetMesh = planetMeshList[key]
 
                 // 惑星の公転の更新
-                planetAngles[key] += planetModel.mesh.userData.orbitSpeed
+                planetAngles[key] += planetMesh.mesh.userData.orbitSpeed
                 // 惑星の自転の更新
-                planetModel.mesh.rotation.y += planetModel.mesh.userData.rotationSpeed;
+                planetMesh.mesh.rotation.y += planetMesh.mesh.userData.rotationSpeed
 
                 // 惑星の軌道の更新
-                if (planetModel.parent === null) {
-                    planetModel.mesh.position.x = planetModel.mesh.userData.orbitRadius * Math.cos(planetAngles[key])
-                    planetModel.mesh.position.z = planetModel.mesh.userData.orbitRadius * Math.sin(planetAngles[key])
+                if (planetMesh.parent === null) {
+                    planetMesh.mesh.position.x = planetMesh.mesh.userData.orbitRadius * Math.cos(planetAngles[key])
+                    planetMesh.mesh.position.z = planetMesh.mesh.userData.orbitRadius * Math.sin(planetAngles[key])
                 } else {
                     // 親惑星が存在する場合
-                    planetModel.mesh.position.x = planetModel.parent.position.x + planetModel.mesh.userData.orbitRadius * Math.cos(planetAngles[key])
-                    planetModel.mesh.position.z = planetModel.parent.position.z + planetModel.mesh.userData.orbitRadius * Math.sin(planetAngles[key])
+                    planetMesh.mesh.position.x = planetMesh.parent.position.x + planetMesh.mesh.userData.orbitRadius * Math.cos(planetAngles[key])
+                    planetMesh.mesh.position.z = planetMesh.parent.position.z + planetMesh.mesh.userData.orbitRadius * Math.sin(planetAngles[key])
                 }
             }
-
             // カメラのターゲットを更新
             updateCameraTarget()
 
@@ -138,7 +137,7 @@ export function useThreeBackgroundScene(mountRef: HTMLDivElement | undefined) {
         const scene = new THREE.Scene()
 
         // カメラの設定
-        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000)
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 50000)
         camera.position.set(200, 200, 0)
 
         // レンダラーの設定
@@ -150,7 +149,7 @@ export function useThreeBackgroundScene(mountRef: HTMLDivElement | undefined) {
         const controls = new OrbitControls(camera, renderer.domElement)
         controls.enableDamping = true
         controls.enableZoom = true
-        controls.maxDistance = 500
+        controls.maxDistance = 10000
 
         // 3D オブジェクトの配置
         // 星 (背景)

@@ -1,32 +1,42 @@
 import * as THREE from "three"
 
-export type MeshPlanetData = {
-    name: string      // 名前
-    planetRadius: number // 惑星の半径
+export type PlanetConfig = {
+    planetName: string // 惑星名
+    planetRadius: number // 半径
     rotationSpeed: number // 自転速度
-    orbitSpeed: number    // 公転速度
-    orbitRadius: number   // 公転半径
+    orbitSpeed: number // 公転速度
+    orbitRadius: number // 公転半径
+}
+export type PlanetConfigList = {
+    sun: PlanetConfig, // 太陽
+    mercury: PlanetConfig, // 水星
+    venus: PlanetConfig, // 金星
+    earth: PlanetConfig, // 地球
+    moon: PlanetConfig, // 月
+    mars: PlanetConfig, // 火星
+    jupiter: PlanetConfig, // 木星
+    saturn: PlanetConfig, // 土星
+    uranus: PlanetConfig, // 天王星
+    neptune: PlanetConfig,  // 海王星
 }
 
-export type PlanetModel = {
+export type PlanetMesh = {
     mesh: THREE.Mesh,
     parent: THREE.Mesh | null,
 }
-
-export type PlanetModels = {
-    sun: PlanetModel, // 太陽
-    mercury: PlanetModel, // 水星
-    venus: PlanetModel, // 金星
-    earth: PlanetModel, // 地球
-    moon: PlanetModel, // 月
-    mars: PlanetModel, // 火星
-    jupiter: PlanetModel, // 木星
-    saturn: PlanetModel, // 土星
-    uranus: PlanetModel, // 天王星
-    neptune: PlanetModel,  // 海王星
+export type PlanetMeshList = {
+    sun: PlanetMesh, // 太陽
+    mercury: PlanetMesh, // 水星
+    venus: PlanetMesh, // 金星
+    earth: PlanetMesh, // 地球
+    moon: PlanetMesh, // 月
+    mars: PlanetMesh, // 火星
+    jupiter: PlanetMesh, // 木星
+    saturn: PlanetMesh, // 土星
+    uranus: PlanetMesh, // 天王星
+    neptune: PlanetMesh,  // 海王星
 }
-
-export function initPlanetModels(): PlanetModels {
+export function initPlanetMeshList(): PlanetMeshList {
     return {
         sun: { mesh: new THREE.Mesh(), parent: null },
         mercury: { mesh: new THREE.Mesh(), parent: null },
@@ -39,17 +49,4 @@ export function initPlanetModels(): PlanetModels {
         uranus: { mesh: new THREE.Mesh(), parent: null },
         neptune: { mesh: new THREE.Mesh(), parent: null },
     }
-}
-
-export enum PlanetName {
-    Sun = "sun",
-    Mercury = "mercury",
-    Venus = "venus",
-    Earth = "earth",
-    Moon = "moon",
-    Mars = "mars",
-    Jupiter = "jupiter",
-    Saturn = "saturn",
-    Uranus = "uranus",
-    Neptune = "neptune",
 }

@@ -7,5 +7,5 @@ import (
 )
 
 func SetupPlanetRouter(router *chi.Mux) {
-	router.Get("/planet", handlers.GetPlanet)
+	router.Get("/api/planet", handlers.GetPlanet)
 }

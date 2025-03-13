@@ -1,81 +1,84 @@
 import * as THREE from "three"
-import { PlanetModels, initPlanetModels } from "~/types/planetTypes"
+import { PlanetMeshList, initPlanetMeshList, PlanetConfigList } from "~/types/planetTypes"
 import { createSunMesh, createMercuryMesh, createVenusMesh, createEarthMesh, createMarsMesh, 
          createJupiterMesh, createSaturnMesh, createUranusMesh, createNeptuneMesh, 
          createMoonMesh, createOrbitMesh } from "~/services/meshService"
+import fetchRequest from "~/utils/fetchRequest"
 
-export function setupPlanet(scene: THREE.Scene): PlanetModels {
-    const planetModels: PlanetModels = initPlanetModels()
+export async function setupPlanet(scene: THREE.Scene): Promise<PlanetMeshList> {
+    const planetMeshList: PlanetMeshList = initPlanetMeshList()
+    // 3D モデルとして表示する星のサイズなどを取得する
+    const planetConfigList = await fetchRequest<PlanetConfigList>('http://localhost:18040/api/planet', { method: 'get' })
 
     // 太陽
-    const sun = createSunMesh()
+    const sun = createSunMesh(planetConfigList.sun)
     sun.position.set(0, 0, 0)
     scene.add(sun)
-    planetModels.sun = { mesh: sun, parent: null }
+    planetMeshList.sun = { mesh: sun, parent: null }
 
     // 水星
-    const mercury = createMercuryMesh()
+    const mercury = createMercuryMesh(planetConfigList.mercury)
     scene.add(mercury)
     const mercuryOrbitLine = createOrbitMesh(mercury.userData.orbitRadius)
     scene.add(mercuryOrbitLine)
-    planetModels.mercury = { mesh: mercury, parent: sun }
+    planetMeshList.mercury = { mesh: mercury, parent: sun }
 
     // 金星
-    const venus = createVenusMesh()
+    const venus = createVenusMesh(planetConfigList.venus)
     scene.add(venus)
     const venusOrbitLine = createOrbitMesh(venus.userData.orbitRadius)
     scene.add(venusOrbitLine)
-    planetModels.venus = { mesh: venus, parent: sun }
+    planetMeshList.venus = { mesh: venus, parent: sun }
 
     // 地球
-    const earth = createEarthMesh()
+    const earth = createEarthMesh(planetConfigList.earth)
     scene.add(earth)
     const earthOrbitLine = createOrbitMesh(earth.userData.orbitRadius)
     scene.add(earthOrbitLine)
-    planetModels.earth = { mesh: earth, parent: sun }
+    planetMeshList.earth = { mesh: earth, parent: sun }
 
     // 月
-    const moon = createMoonMesh()
+    const moon = createMoonMesh(planetConfigList.moon)
     scene.add(moon)
     const moonOrbitLine = createOrbitMesh(moon.userData.orbitRadius)
     earth.add(moonOrbitLine)
-    planetModels.moon = { mesh: moon, parent: earth }
+    planetMeshList.moon = { mesh: moon, parent: earth }
 
     // 火星
-    const mars = createMarsMesh()
+    const mars = createMarsMesh(planetConfigList.mars)
     scene.add(mars)
     const marsOrbitLine = createOrbitMesh(mars.userData.orbitRadius)
     scene.add(marsOrbitLine)
-    planetModels.mars = { mesh: mars, parent: sun }
+    planetMeshList.mars = { mesh: mars, parent: sun }
 
     // 木星
-    const jupiter = createJupiterMesh()
+    const jupiter = createJupiterMesh(planetConfigList.jupiter)
     scene.add(jupiter)
     const jupiterOrbitLine = createOrbitMesh(jupiter.userData.orbitRadius)
     scene.add(jupiterOrbitLine)
-    planetModels.jupiter = { mesh: jupiter, parent: sun }
+    planetMeshList.jupiter = { mesh: jupiter, parent: sun }
 
     // 土星
-    const saturn = createSaturnMesh()
+    const saturn = createSaturnMesh(planetConfigList.saturn)
     scene.add(saturn)
     const saturnOrbitLine = createOrbitMesh(saturn.userData.orbitRadius)
     scene.add(saturnOrbitLine)
-    planetModels.saturn = { mesh: saturn, parent: sun }
+    planetMeshList.saturn = { mesh: saturn, parent: sun }
 
     // 天王星
-    const uranus = createUranusMesh()
+    const uranus = createUranusMesh(planetConfigList.uranus)
     scene.add(uranus)
     const uranusOrbitLine = createOrbitMesh(uranus.userData.orbitRadius)
     scene.add(uranusOrbitLine)
-    planetModels.uranus = { mesh: uranus, parent: sun }
+    planetMeshList.uranus = { mesh: uranus, parent: sun }
 
     // 海王星
-    const neptune = createNeptuneMesh()
+    const neptune = createNeptuneMesh(planetConfigList.neptune)
     scene.add(neptune)
     const neptuneOrbitLine = createOrbitMesh(neptune.userData.orbitRadius)
     scene.add(neptuneOrbitLine)
-    planetModels.neptune = { mesh: neptune, parent: sun }
+    planetMeshList.neptune = { mesh: neptune, parent: sun }
 
-    return planetModels
+    return planetMeshList
 }
 

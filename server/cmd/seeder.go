@@ -17,5 +17,4 @@ func main() {
 	core.InitDB()
 	// シードデータを追加する
 	seeds.SeedMstPlanet(core.DB)
-	seeds.SeedMstSetting(core.DB)
 }
