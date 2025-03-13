@@ -49,7 +49,7 @@ export function createJupiterMesh(planetConfig: PlanetConfig) {
 export function createSaturnMesh(planetConfig: PlanetConfig) {
     const mesh = createPlanetMesh(planetConfig, true)
     // 土星の環を追加
-    // addRingMesh(mesh, RADIUS / 0.6, RADIUS / 0.9)
+    addRingMesh(mesh, mesh.userData.planetRadius * 1.2, mesh.userData.planetRadius * 1.7)
     return mesh
 }
 /**

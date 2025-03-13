@@ -69,10 +69,14 @@ export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
             const meshes = Object.values(planetMeshList).map((model) => {
                 return model.mesh
             })
-            const intersects = raycaster.intersectObjects(meshes)
+            const intersects = raycaster.intersectObjects(meshes, false)
 
             if (intersects.length > 0) {
-                selectedCamera = intersects[0].object
+                const clickedObject = intersects[0].object
+
+                if (clickedObject instanceof THREE.Mesh) {
+                    selectedCamera = clickedObject
+                }
             }
         }
         renderer.domElement.addEventListener("click", onPlanetClick)
@@ -98,7 +102,8 @@ export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
                 // 惑星の公転の更新
                 planetAngles[key] += planetMesh.mesh.userData.orbitSpeed
                 // 惑星の自転の更新
-                planetMesh.mesh.rotation.y += planetMesh.mesh.userData.rotationSpeed
+                const rotationFactor = 0.001
+                planetMesh.mesh.rotation.y += rotationFactor / planetMesh.mesh.userData.rotationSpeed
 
                 // 惑星の軌道の更新
                 if (planetMesh.parent === null) {

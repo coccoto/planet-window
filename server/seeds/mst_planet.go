@@ -11,9 +11,10 @@ func SeedMstPlanet(db *gorm.DB) {
 
 	const sunPlanetRadiusScale = 1.0 / 50000.0
 	const otherPlanetRadiusScale = 1.0 / 10000.0
-	const rotationSpeedScale = 1.0 / 1000.0
+	const rotationSpeedScale = 1.0
 	const orbitSpeedScale = 1.0 / 100000.0
 	const orbitRadiusScale = 1.0 / 1000000.0
+	const moonOrbitRadiusScale = 1.0 / 100000.0
 
 	var planets []models.MstPlanet = []models.MstPlanet{
 		{
@@ -54,7 +55,7 @@ func SeedMstPlanet(db *gorm.DB) {
 			PlanetRadius: 1737.40 * otherPlanetRadiusScale,
 			RotationSpeed: 27.32 * rotationSpeedScale,
 			OrbitSpeed: 1.02 * orbitSpeedScale,
-			OrbitRadius: 384400.00 * orbitRadiusScale,
+			OrbitRadius: 384400.00 * moonOrbitRadiusScale,
 		},
 		{
 			PlanetId: 6,
