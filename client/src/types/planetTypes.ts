@@ -1,6 +1,7 @@
 import * as THREE from "three"
 
 export type PlanetConfig = {
+    planetId: number // 惑星ID
     planetName: string // 惑星名
     planetRadius: number // 半径
     rotationSpeed: number // 自転速度

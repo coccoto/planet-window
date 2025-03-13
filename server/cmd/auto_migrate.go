@@ -15,6 +15,8 @@ func main() {
 	}
 	// データベースを初期化する
 	core.InitDB()
+	// マイグレーションを実行する
+	core.AutoMigrate()
 	// シードデータを追加する
 	seeds.SeedMstPlanet(core.DB)
 }

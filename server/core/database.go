@@ -28,11 +28,15 @@ func InitDB() {
 
 	log.Printf("Connection to the database was successful. Host: %s User: %s Database: %s",
 		os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_DATABASE"))
+}
 
+func AutoMigrate() {
 	// migration
 	if err := DB.AutoMigrate(
-			&models.MstPlanet{},
-		); err != nil {
-		log.Fatal("Failed to migrate database. Error: " + err.Error())
-	}
+		&models.MstPlanet{},
+	); err != nil {
+	log.Fatal("Failed to migrate database. Error: " + err.Error())
 }
+}
+
+
