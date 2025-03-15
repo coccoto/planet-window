@@ -19,7 +19,7 @@ func GetLogger() *slog.Logger {
 
 func initLogger() {
 	logFile := &lumberjack.Logger{
-		Filename: os.Getenv("LOG_FILE_PATH"),
+		Filename: os.Getenv("LOG_DIR") + "/app.log",
 		MaxSize: 1, // 最大サイズ (MB)
 		MaxBackups: 10, // 最大バックアップファイル数
 		Compress: true, // 圧縮
