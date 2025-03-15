@@ -3,7 +3,7 @@ set -eu
 
 function runGoServer() {
     cd "$1"
-    go run main.go || exit 1
+    ./dist/app || exit 1
 }
 
 function runNodeServer() {
