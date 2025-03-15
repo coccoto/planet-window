@@ -13,7 +13,7 @@ function npmBuild() {
 
 function goBuild() {
     cd "$1"
-    go build dist/app || exit 1
+    go build -o dist/app || exit 1
 }
 
 # 本スクリプトファイルのディレクトリをセットする
