@@ -3,7 +3,7 @@ import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import { createStarsMesh } from "~/services/meshService"
 import { setupPlanet, setupPlanetMarker } from "~/services/planetService"
-import { PlanetMeshList } from "~/types/planetTypes"
+import { PlanetMeshList } from "~/types/planetType"
 
 export function useThreePlanetScene(mountRef: HTMLDivElement | undefined) {
     const planetAngles: Record<string, number> = {

@@ -1,5 +1,5 @@
 import * as THREE from "three"
-import { PlanetConfig } from "~/types/planetTypes"
+import { PlanetConfig } from "~/types/planetType"
 
 /**
  * @returns 太陽
