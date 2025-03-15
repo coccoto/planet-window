@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"planet-window/core"
 	"planet-window/routes"
@@ -14,12 +13,10 @@ import (
 
 func main() {
 	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Failed to load .env")
-	}
-	// データベースを初期化する
-	core.InitDB()
 
+	if err != nil {
+		core.GetLogger().Error("Failed to load .env")
+	}
 	// ルーターを初期化する
 	router := chi.NewRouter()
 

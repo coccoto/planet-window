@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"planet-window/core"
 	"planet-window/seeds"
 
@@ -11,11 +10,8 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Failed to load .env")
+		core.GetLogger().Error("Failed to load .env")
 	}
-	// データベースを初期化する
-	core.InitDB()
-
 	// マイグレーションを実行する
 	core.AutoMigrate()
 	// シードデータを追加する
