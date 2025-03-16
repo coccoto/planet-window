@@ -50,8 +50,14 @@ func GetPlanet(responseWriter http.ResponseWriter, request *http.Request) {
 		}
 	}
 	responseWriter.WriteHeader(http.StatusOK)
-	json.NewEncoder(responseWriter).Encode(dto.Response{
+	if err := json.NewEncoder(responseWriter).Encode(dto.Response{
 		Status: "success",
 		Data: result,
-	})
+	}); err != nil {
+		responseWriter.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(responseWriter).Encode(dto.Response{
+			Status: "error",
+			Data: nil,
+		})
+	}
 }
