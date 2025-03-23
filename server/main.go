@@ -33,6 +33,6 @@ func main() {
 	routes.SetupPlanetRouter(router)
 
 	// HTTP サーバーを起動する
-	const PORT string = ":18040"
+	const PORT string = ":18030"
 	http.ListenAndServe(PORT, router)
 }
