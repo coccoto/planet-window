@@ -25,7 +25,7 @@ func main() {
 	router.Use(middleware.Recoverer)
     // CORS ヘッダーを設定する
 	router.Use(cors.Handler(cors.Options{
-        AllowedOrigins: []string{"http://localhost:18050", "https://planet-window.com"},
+        AllowedOrigins: []string{"http://localhost:18030", "https://planet-window.com"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 	}))
 
