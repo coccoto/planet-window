@@ -66,7 +66,11 @@ export function createNeptuneMesh(planetConfig: PlanetConfig) {
 }
 
 /**
- * @retrun 惑星
+ * 惑星の 3D メッシュを作成する
+ *
+ * SphereGeometry で球体を作成し、惑星のテクスチャ画像を貼り付ける
+ * MeshStandardMaterial: 光源の影響を受けるマテリアル (惑星用)
+ * MeshBasicMaterial: 光源の影響を受けないマテリアル (太陽用)
  */
 function createPlanetMesh(data: PlanetConfig, useMeshStandardMaterial: boolean): THREE.Mesh {
     const texture = new THREE.TextureLoader().load('/images/' + data.planetName + '.jpg')
@@ -79,8 +83,9 @@ function createPlanetMesh(data: PlanetConfig, useMeshStandardMaterial: boolean):
 }
 
 /**
- * @param innerRadius 内側の半径
- * @param outerRadius 外側の半径
+ * 惑星にリング (環) を追加する
+ *
+ * RingGeometry でドーナツ型の平面を作成し、惑星に追加する
  */
 function addRingMesh(mesh: THREE.Mesh, innerRadius: number, outerRadius: number) {
     // リングジオメトリを作成する
@@ -112,8 +117,10 @@ function addRingMesh(mesh: THREE.Mesh, innerRadius: number, outerRadius: number)
 }
 
 /**
- * @param radius 軌道の半径
- * @returns 軌道
+ * 惑星の軌道線を作成する
+ *
+ * 惑星が公転する軌道を円形の線で表現する
+ * BufferGeometry で円周上の点を生成し、LineBasicMaterial で線として描画する
  */
 export function createOrbitMesh(radius: number): THREE.Line {
     // 軌道の分割数の設定
@@ -132,7 +139,11 @@ export function createOrbitMesh(radius: number): THREE.Line {
 }
 
 /**
- * @returns 星
+ * 背景の星空を作成する
+ *
+ * 3D 空間にランダムに配置された点の集合として星空を表現する
+ * BufferGeometry で大量の頂点を効率的に管理し、PointsMaterial で点として描画する
+ * 宇宙空間の背景として、惑星の周りに広がる星々を演出する
  */
 export function createStarsMesh() {
     // 星の数
@@ -154,7 +165,11 @@ export function createStarsMesh() {
 }
 
 /**
- * @returns 惑星マーカー
+ * 惑星マーカー (白い円) を作成する
+ *
+ * Canvas で白い円を描画し、それをテクスチャとして Sprite に適用する
+ * Sprite は常にカメラの方を向く 2D オブジェクトで、惑星の位置を示すマーカーとして使用する
+ * 小さい惑星でもクリックしやすくするための視覚的な補助として機能する
  */
 export function createPlanetMarker(): THREE.Sprite {
     // canvas
