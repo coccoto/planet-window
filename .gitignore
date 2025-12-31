@@ -1,25 +1,37 @@
-# log files
-logs/
-*.log
-
-# builded files
-dist/
-.output/
-.vinxi/
-
-# env files
-.env
-
-# Node.js files
-node_modules/
-
-# next.js
-.next
-next-env.d.ts
-
 # OS generated files
 .DS_Store
 Thumbs.db
 
-# Winston files
+# Application logs
+logs
+*.log
+
+# Environment variables and secrets
+.env
+
+# Build outputs
+dist
+.output
+
+# Auto-generated code
+generated
+
+# Test coverage reports
+coverage
+
+# Dependencies
+node_modules
+
+# Vinxi
+.vinxi
+
+# Next.js
+.next
+next-env.d.ts
+
+# Winston logger
 *-audit.json
+
+# Claude Code AI assistant
+.claude
+.serena
