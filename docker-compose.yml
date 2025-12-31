@@ -1,0 +1,32 @@
+services:
+  server:
+    container_name: planet-window-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "18040:18040"
+    volumes:
+      - ./server/logs:/app/server/logs
+    env_file:
+      - ./server/.env
+    networks:
+      - planet-window-network
+
+  client:
+    container_name: planet-window-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "18030:18030"
+    env_file:
+      - ./client/.env
+    depends_on:
+      - server
+    networks:
+      - planet-window-network
+
+networks:
+  planet-window-network:
+    driver: bridge
