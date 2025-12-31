@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 	"planet-window/core"
 	"planet-window/routes"
 
@@ -33,6 +34,9 @@ func main() {
 	routes.SetupPlanetRouter(router)
 
 	// HTTP サーバーを起動する
-	const PORT string = ":18040"
-	http.ListenAndServe(PORT, router)
+	port := os.Getenv("PORT")
+	if port[0] != ':' {
+		port = ":" + port
+	}
+	http.ListenAndServe(port, router)
 }

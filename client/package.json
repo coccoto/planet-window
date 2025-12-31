@@ -2,11 +2,11 @@
   "name": "example-basic",
   "type": "module",
   "scripts": {
-    "dev-server": "vinxi dev --port 18030",
+    "dev-server": "vinxi dev --port ${PORT}",
     "release": "run-s release:clean release:build",
     "release:clean": "rimraf .output",
     "release:build": "vinxi build",
-    "start": "vinxi start --port 18030"
+    "start": "vinxi start --port ${PORT}"
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
