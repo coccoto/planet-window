@@ -12,6 +12,10 @@ RUN npm ci
 # プログラムをコンテナにコピー
 COPY ./ ./
 
+# 環境変数を設定
+ARG VITE_API_URL
+ENV VITE_API_URL=${VITE_API_URL}
+
 # アプリケーションをビルド
 RUN npm run release
 

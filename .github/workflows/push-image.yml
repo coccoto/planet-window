@@ -39,3 +39,5 @@ jobs:
           file: ./client/Dockerfile
           push: true
           tags: ghcr.io/coccoto/planet-window-client:latest
+          build-args: |
+            VITE_API_URL=http://localhost:18040
