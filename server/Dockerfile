@@ -15,5 +15,8 @@ COPY ./ ./
 # アプリケーションをビルド
 RUN go build -o ./dist/app
 
+# GitHub リポジトリ連携
+LABEL org.opencontainers.image.source=https://github.com/coccoto/planet-window
+
 # アプリケーションを実行
 CMD ["./dist/app"]
