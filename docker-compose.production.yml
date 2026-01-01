@@ -1,9 +1,8 @@
 services:
   server:
     container_name: planet-window-server
-    build:
-      context: ./server
-      dockerfile: Dockerfile
+    image: ghcr.io/coccoto/planet-window-server:latest
+    restart: unless-stopped
     ports:
       - "18040:18040"
     env_file:
@@ -13,9 +12,8 @@ services:
 
   client:
     container_name: planet-window-client
-    build:
-      context: ./client
-      dockerfile: Dockerfile
+    image: ghcr.io/coccoto/planet-window-client:latest
+    restart: unless-stopped
     ports:
       - "18030:18030"
     env_file:
