@@ -12,7 +12,7 @@ export default createHandler(() => (
                     <meta name="description" content='Look out the window into space and explore the solar system in 3D. Rotate planets and discover the wonders of the cosmos.'></meta>
                     <meta name='author' content='coccoto'></meta>
                     {/* OGP */}
-                    <meta property='og:url' content='https://planet-window.com/'></meta>
+                    <meta property='og:url' content='https://planet-window.coccoto.com/'></meta>
                     <meta property='og:type' content='website'></meta>
                     <meta property='og:title' content='Planet Window<'></meta>
                     <meta property='og:description' content='Look out the window into space and explore the solar system in 3D. Rotate planets and discover the wonders of the cosmos.'></meta>
