@@ -40,4 +40,4 @@ jobs:
           push: true
           tags: ghcr.io/coccoto/planet-window-client:latest
           build-args: |
-            VITE_API_URL=http://localhost:18040
+            VITE_API_URL=https://planet-window.coccoto.com
