@@ -23,6 +23,15 @@ export default createHandler(() => (
                     <link rel='preconnect' href='https://fonts.googleapis.com'></link>
                     <link rel='preconnect' href='https://fonts.gstatic.com'></link>
                     <link href='https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap' rel='stylesheet'></link>
+                    {/* Google tag (gtag.js) */}
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ENSRN05GPN"></script>
+                    <script innerHTML={`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+
+                        gtag('config', 'G-ENSRN05GPN');
+                    `} ></script>
                 </head>
                 <body>
                     <div id="app">{children}</div>
